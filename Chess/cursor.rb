@@ -1,6 +1,6 @@
 require "io/console"
 require_relative 'display.rb'
-
+require 'byebug'
 KEYMAP = {
   " " => :space,
   "h" => :left,
@@ -41,6 +41,7 @@ class Cursor
   end
 
   def get_input
+    debugger
     key = KEYMAP[read_char]
     handle_key(key)
   end
@@ -104,8 +105,10 @@ class Cursor
   end
 
   def update_pos(diff)
+    x, y = @cursor_pos
+    c, d = MOVES[diff]
     #add the positions and check if it is valid on the board
-    end_pos = @cursor_pos + MOVE[diff]
+    end_pos = [x + c, y + d]
     if @board.valid_pos?(end_pos)
       @cursor_pos = end_pos
     end

@@ -10,11 +10,11 @@ class Board
     self.grid.each_with_index do |rows, idx|
       if [0, 1, 6, 7].include?(idx)
         (0..7).each do |col|
-          self.grid[idx][col] = Piece.new
+          self.grid[idx][col] = Piece.new('white', self)
         end
       else
         (0..7).each do |col|
-          self.grid[idx][col] = NullPiece.new
+          self.grid[idx][col] = NullPiece.new('grey', self)
          end
       end
     end
@@ -27,7 +27,7 @@ class Board
       raise ArgumentError.new('A piece is already at the position!')
     else
       moved_piece = self[start_pos]
-      self[start_pos] = NullPiece.new
+      self[start_pos] = NullPiece.instance
       self[end_pos] = moved_piece
     end
   end
@@ -35,9 +35,7 @@ class Board
 
   def valid_pos?(pos)
     if (0..7).to_a.include?(pos[0]) && (0..7).to_a.include?(pos[1])
-      if self[pos].is_a?(NullPiece)
-        return true
-      end
+      return true
     end
     false
   end
@@ -52,6 +50,9 @@ class Board
     @grid[row][col] = value
   end
 
+  def inspect
+    return 'board'
+  end
   # protected
   attr_accessor :grid
 

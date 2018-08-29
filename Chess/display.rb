@@ -31,4 +31,12 @@ class Display
     end
   end
 
+  def test
+    until false
+      system('clear')
+      render
+      puts @cursor.cursor_pos
+      @cursor.get_input
+    end
+  end
 end
